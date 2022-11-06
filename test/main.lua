@@ -1,6 +1,7 @@
 lust = require 'external.lust.lust'
 
 require 'test.world'
+require 'test.entity'
 
 print()
 

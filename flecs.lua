@@ -12,6 +12,10 @@ function aux.class(tableOrNil)
     return table
 end
 
+function aux.id(first, second)
+    return second and clib.ecs_make_pair(first, second) or first
+end
+
 -- }}}
 
 -- flecs.World {{{
@@ -20,6 +24,23 @@ local World = aux.class()
 
 function World.__new()
     return ffi.gc(clib.ecs_init(), clib.ecs_fini)
+end
+
+function World:entity(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_entity_init(self, ffi.new('ecs_entity_desc_t', desc))
+end
+
+function World:add(entity, first, second)
+    clib.ecs_add_id(self, entity, aux.id(first, second))
+end
+
+function World:remove(entity, first, second)
+    clib.ecs_remove_id(self, entity, aux.id(first, second))
+end
+
+function World:has(entity, first, second)
+    return clib.ecs_has_id(self, entity, aux.id(first, second))
 end
 
 -- }}}

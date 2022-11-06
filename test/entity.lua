@@ -3,7 +3,7 @@ local flecs = require 'flecs' {
     cdef = require 'flecs_cdef'
 }
 
-lust.describe('World', function()
+lust.describe('Entity', function()
     local world
 
     lust.before(function()
@@ -14,7 +14,8 @@ lust.describe('World', function()
         world = nil
     end)
 
-    lust.it('should initialise', function()
-        lust.expect(world).to.exist()
+    lust.it('should create entities', function()
+        lust.expect(world:entity()).to.exist()
+        lust.expect(world:entity({ name = 'Bob' })).to.exist()
     end)
 end)
