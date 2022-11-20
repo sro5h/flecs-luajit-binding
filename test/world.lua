@@ -1,4 +1,4 @@
-local flecs = require 'flecs' {
+local ecs = require 'flecs' {
     clib = 'external/flecs/build/libflecs.so',
     cdef = require 'flecs_cdef',
 }
@@ -7,7 +7,7 @@ lust.describe('World', function()
     local world
 
     lust.before(function()
-        world = flecs.World()
+        world = ecs.World()
     end)
 
     lust.after(function()
