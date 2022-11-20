@@ -47,8 +47,12 @@ end
 
 -- flecs.init {{{
 
-local function bind(flecs)
-    flecs.World = ffi.metatype('ecs_world_t', World)
+local function bind(flecs, options)
+    if options.no_metatypes then
+        flecs.World = World
+    else
+        flecs.World = ffi.metatype('ecs_world_t', World)
+    end
 end
 
 local function init(flecs, optionsOrNil)
@@ -65,7 +69,7 @@ local function init(flecs, optionsOrNil)
             ffi.cdef(options.cdef)
         end
 
-        bind(flecs)
+        bind(flecs, options)
     end
 
     return flecs

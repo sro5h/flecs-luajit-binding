@@ -1,6 +1,6 @@
 local flecs = require 'flecs' {
     clib = 'external/flecs/build/libflecs.so',
-    cdef = require 'flecs_cdef'
+    cdef = require 'flecs_cdef',
 }
 
 lust.describe('World', function()
