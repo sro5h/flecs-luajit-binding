@@ -16,6 +16,10 @@ function aux.id(first, second)
     return second and clib.ecs_make_pair(first, second) or first
 end
 
+function aux.string(string)
+    return string == nil and nil or ffi.string(string)
+end
+
 -- }}}
 
 -- flecs.World {{{
@@ -31,6 +35,16 @@ function World:entity(descOrNil)
     return clib.ecs_entity_init(self, ffi.new('ecs_entity_desc_t', desc))
 end
 
+function World:component(name, ctypeOrNil)
+    local ctypeOrNil = ctypeOrNil or ffi.typeof(name)
+    local entity = self:entity({ name = name, symbol = name })
+
+    return clib.ecs_component_init(self, ffi.new('ecs_component_desc_t', {
+        entity = entity,
+        type = { size = ffi.sizeof(ctype), alignment = ffi.alignof(ctype) },
+    }))
+end
+
 function World:add(entity, first, second)
     clib.ecs_add_id(self, entity, aux.id(first, second))
 end
@@ -39,8 +53,134 @@ function World:remove(entity, first, second)
     clib.ecs_remove_id(self, entity, aux.id(first, second))
 end
 
+local function enable(world, entity, first, second, value)
+    if first then
+        clib.ecs_enable_id(world, entity, aux.id(first, second), value)
+    else
+        clib.ecs_enable(world, entity, value)
+    end
+end
+
+function World:enable(entity, first, second)
+    return enable(self, entity, first, second, true)
+end
+
+function World:disable(entity, first, second)
+    return enable(self, entity, first, second, false)
+end
+
+function World:is_enabled(entity, first, second)
+    return clib.ecs_is_enabled_id(self, entity, aux.id(first, second))
+end
+
+function World:clear(entity)
+    clib.ecs_clear(self, entity)
+end
+
+function World:delete(entity)
+    clib.ecs_delete(self, entity)
+end
+
+function World:delete_with(first, second)
+    clib.ecs_delete_with(self, aux.id(first, second))
+end
+
+function World:remove_all(first, second)
+    clib.ecs_remove_all(self, aux.id(first, second))
+end
+
+local function get(world, entity, symbol, first, second)
+    local ctype = ffi.typeof('$ const*', symbol)
+    return ffi.cast(ctype, clib.ecs_get_id(world, entity, aux.id(first, second)))
+end
+
+function World:get(entity, first, second)
+    return get(self, entity, self:get_symbol(first), first, second)
+end
+
+function World:get_second(entity, first, second)
+    return get(self, entity, self:get_symbol(second), first, second)
+end
+
+local function set(world, entity, symbol, first, secondOrValue, valueOrNil)
+    local value = valueOrNil or secondOrValue
+    local second = valueOrNil and secondOrValue or nil
+    local ctype = ffi.typeof(symbol)
+
+    if type(value) ~= 'cdata' then
+        value = ffi.new(ctype, value)
+    end
+
+    clib.ecs_set_id(self, entity, aux.id(first, second), ffi.sizeof(ctype), value)
+end
+
+function World:set(entity, first, secondOrValue, valueOrNil)
+    set(self, entity, self:get_symbol(first), first, second, value)
+end
+
+function World:set_second(entity, first, secondOrValue, valueOrNil)
+    set(self, entity, self:get_symbol(second), first, second, value)
+end
+
+function World:modified(entity, first, second)
+    clib.ecs_modified_id(self, entity, aux.id(first, second))
+end
+
+function World:is_valid(entity)
+    return clib.ecs_is_valid(self, entity)
+end
+
+function World:is_alive(entity)
+    return clib.ecs_is_alive(self, entity)
+end
+
+function World:ensure(entity)
+    clib.ecs_ensure(self, entity)
+end
+
+function World:ensure_id(entity)
+    clib.ecs_ensure_id(self, entity)
+end
+
+function World:exists(entity)
+    return clib.ecs_exists(self, entity)
+end
+
+function World:get_name(entity)
+    return aux.string(clib.ecs_get_name(self, entity))
+end
+
+function World:get_symbol(entity)
+    return aux.string(clib.ecs_get_symbol(self, entity))
+end
+
+function World:set_name(entity, value)
+    clib.ecs_set_name(self, entity, value)
+end
+
+function World:set_symbol(entity, value)
+    clib.ecs_set_symbol(self, entity, value)
+end
+
+function World:set_alias(entity, value)
+    clib.ecs_set_alias(self, entity, value)
+end
+
 function World:has(entity, first, second)
     return clib.ecs_has_id(self, entity, aux.id(first, second))
+end
+
+function World:get_target(entity, relationship, indexOrNil)
+    local index = indexOrNil or 0
+    return clib.ecs_get_target(self, entity, relationship, index)
+end
+
+function World:get_target_for(entity, relationship, id)
+    return clib.ecs_get_target_for_id(self, entity, relationship, id)
+end
+
+function World:count(entity)
+    return clib.ecs_count_id(self, entity)
 end
 
 -- }}}
