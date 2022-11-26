@@ -279,9 +279,23 @@ end
 
 function Iter:each()
     local i = 0
+    local reached_count = true
 
     return function()
+        if reached_count then
+            if self:next() then
+                reached_count = false
+                i = 0
+            else
+                return nil
+            end
+        end
+
         i = i + 1
+
+        if i == self:count() then
+            reached_count = true
+        end
 
         if i <= self:count() then
             return self:entity(i - 1), self:fields(i - 1)
