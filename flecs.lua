@@ -36,13 +36,18 @@ function World:entity(descOrNil)
 end
 
 function World:component(name, ctypeOrNil)
-    local ctypeOrNil = ctypeOrNil or ffi.typeof(name)
+    local ctype = ctypeOrNil or ffi.typeof(name)
     local entity = self:entity({ name = name, symbol = name })
 
     return clib.ecs_component_init(self, ffi.new('ecs_component_desc_t', {
         entity = entity,
         type = { size = ffi.sizeof(ctype), alignment = ffi.alignof(ctype) },
     }))
+end
+
+function World:query(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
 end
 
 function World:add(entity, first, second)
@@ -90,7 +95,7 @@ function World:remove_all(first, second)
 end
 
 local function get(world, entity, symbol, first, second)
-    local ctype = ffi.typeof('$ const*', symbol)
+    local ctype = ffi.typeof('$ const*', ffi.typeof(symbol))
     return ffi.cast(ctype, clib.ecs_get_id(world, entity, aux.id(first, second)))
 end
 
@@ -111,15 +116,15 @@ local function set(world, entity, symbol, first, secondOrValue, valueOrNil)
         value = ffi.new(ctype, value)
     end
 
-    clib.ecs_set_id(self, entity, aux.id(first, second), ffi.sizeof(ctype), value)
+    clib.ecs_set_id(world, entity, aux.id(first, second), ffi.sizeof(ctype), value)
 end
 
 function World:set(entity, first, secondOrValue, valueOrNil)
-    set(self, entity, self:get_symbol(first), first, second, value)
+    set(self, entity, self:get_symbol(first), first, secondOrValue, valueOrNil)
 end
 
 function World:set_second(entity, first, secondOrValue, valueOrNil)
-    set(self, entity, self:get_symbol(second), first, second, value)
+    set(self, entity, self:get_symbol(second), first, secondOrValue, valueOrNil)
 end
 
 function World:modified(entity, first, second)
@@ -146,6 +151,7 @@ function World:exists(entity)
     return clib.ecs_exists(self, entity)
 end
 
+-- TODO: Rename to `name`
 function World:get_name(entity)
     return aux.string(clib.ecs_get_name(self, entity))
 end
@@ -183,6 +189,114 @@ function World:count(entity)
     return clib.ecs_count_id(self, entity)
 end
 
+function World:iter(query)
+    return clib.ecs_query_iter(self, query)
+end
+
+-- }}}
+
+-- flecs.Query {{{
+
+local Query = aux.class()
+
+function Query:is_changed()
+    return clib.ecs_query_changed(self, nil)
+end
+
+function Query:is_orphaned()
+    return clib.ecs_query_orphaned(self)
+end
+
+-- }}}
+
+-- flecs.Iter {{{
+
+local Iter = aux.class()
+
+function Iter:world()
+    return self._world
+end
+
+function Iter:entity(index)
+    return self.entities[index]
+end
+
+function Iter:count()
+    return self._count
+end
+
+function Iter:field_id(j)
+    return clib.ecs_field_id(self, j)
+end
+
+function Iter:is_self(j)
+    return clib.ecs_field_is_self(self, j)
+end
+
+function Iter:is_readonly(j)
+    return clib.ecs_field_is_readonly(self, j)
+end
+
+function Iter:is_writeonly(j)
+    return clib.ecs_field_is_writeonly(self, j)
+end
+
+function Iter:field(j)
+    if clib.ecs_field_size(self, j) == 0 then
+        return nil
+    end
+
+    local ctype = ffi.typeof(self:world():get_symbol(self:field_id(j)))
+    local pointer = clib.ecs_field_w_size(self, ffi.sizeof(ctype), j)
+
+    if self:is_readonly(j) then
+        return ffi.cast(ffi.typeof('$ const*', ctype), pointer)
+    else
+        return ffi.cast(ffi.typeof('$*', ctype), pointer)
+    end
+end
+
+function Iter:field_count()
+    return self._field_count
+end
+
+function Iter:fields(index)
+    index = index or 0
+    local fields = {}
+
+    for j = 1, self:field_count() do
+        local field = self:field(j)
+
+        if self:is_self(j) and field ~= nil then
+            table.insert(fields, field + index)
+        else
+            table.insert(fields, field)
+        end
+    end
+
+    return table.unpack(fields)
+end
+
+function Iter:each()
+    local i = 0
+
+    return function()
+        i = i + 1
+
+        if i <= self:count() then
+            return self:entity(i - 1), self:fields(i - 1)
+        end
+    end
+end
+
+function Iter:next()
+    return clib.ecs_iter_next(self)
+end
+
+function Iter:delta_time()
+    return self._delta_time
+end
+
 -- }}}
 
 -- flecs.init {{{
@@ -190,8 +304,12 @@ end
 local function bind(flecs, options)
     if options.no_metatypes then
         flecs.World = World
+        flecs.Query = Query
+        flecs.Iter = Iter
     else
         flecs.World = ffi.metatype('ecs_world_t', World)
+        flecs.Query = ffi.metatype('ecs_query_t', Query)
+        flecs.Iter = ffi.metatype('ecs_iter_t', Iter)
     end
 end
 

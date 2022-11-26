@@ -14,7 +14,7 @@ lust.describe('World', function()
         world = nil
     end)
 
-    lust.it('should initialise', function()
+    lust.it('Should initialise', function()
         lust.expect(world).to.exist()
     end)
 end)
