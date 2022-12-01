@@ -359,5 +359,6 @@ bool ecs_field_is_writeonly(ecs_iter_t const*, int32_t);
 ecs_id_t ecs_field_id(ecs_iter_t const*, int32_t);
 size_t ecs_field_size(ecs_iter_t const*, int32_t);
 bool ecs_field_is_self(ecs_iter_t const*, int32_t);
+ecs_entity_t ecs_lookup(ecs_world_t const* world, char const* name);
 
 ]]

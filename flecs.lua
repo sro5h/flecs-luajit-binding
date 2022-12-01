@@ -192,6 +192,10 @@ function World:iter(query)
     return clib.ecs_query_iter(self, query)
 end
 
+function World:lookup(name)
+    return clib.ecs_lookup(self, name)
+end
+
 -- }}}
 
 -- flecs.Query {{{
