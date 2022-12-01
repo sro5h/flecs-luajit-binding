@@ -326,6 +326,10 @@ local function init(flecs, optionsOrNil)
             ffi.cdef(options.cdef)
         end
 
+        if options.world then
+            flecs.world = ffi.cast('ecs_world_t*', options.world)
+        end
+
         bind(flecs, options)
     end
 
