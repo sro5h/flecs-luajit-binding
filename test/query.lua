@@ -32,14 +32,14 @@ lust.describe('Query', function()
             for i = 0, iter:count() - 1 do
                 local e = iter:entity(i)
                 local position = iter:fields(i)]]
-        for e, position in iter:each() do
-            lust.expect(e).to.exist()
-            lust.expect(position).to.exist()
+        while iter:next() do
+            for e, position in iter:each() do
+                lust.expect(e).to.exist()
+                lust.expect(position).to.exist()
 
-            position.x = position.x + 1
+                position.x = position.x + 1
+            end
         end
-            --[[end
-        end]]
 
         lust.expect(world:get(e1, Position).x).to.be(2)
         lust.expect(world:get(e1, Position).y).to.be(2)
