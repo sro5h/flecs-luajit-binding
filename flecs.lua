@@ -17,7 +17,7 @@ function aux.id(first, second)
 end
 
 function aux.string(string)
-    return string == nil and nil or ffi.string(string)
+    return string ~= nil and ffi.string(string) or nil
 end
 
 -- }}}
