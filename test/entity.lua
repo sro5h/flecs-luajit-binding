@@ -47,4 +47,11 @@ lust.describe('Entity', function()
         lust.expect(p.x).to.be(1)
         lust.expect(p.y).to.be(2)
     end)
+
+    lust.it('Should lookup entities', function()
+        local e = world:entity({ name = 'Velocity' })
+
+        lust.expect(e).to_not.be(0)
+        lust.expect(world:lookup('Velocity')).to_not.be(0)
+    end)
 end)
