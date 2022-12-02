@@ -1,4 +1,10 @@
-lust = require 'external.lust.lust'
+package.path = package.path .. ';external/lust/?.lua'
+require 'flecs' {
+    clib = 'external/flecs/build/libflecs.so',
+    cdef = require 'flecs_cdef',
+}
+
+lust = require 'lust'
 
 local ffi = require 'ffi'
 ffi.cdef 'typedef struct Position { uint32_t x, y; } Position;'

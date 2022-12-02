@@ -1,7 +1,4 @@
-local ecs = require 'flecs' {
-    clib = 'external/flecs/build/libflecs.so',
-    cdef = require 'flecs_cdef'
-}
+local ecs = require 'flecs'
 
 lust.describe('Struct', function()
     local world
