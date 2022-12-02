@@ -50,6 +50,11 @@ function World:query(descOrNil)
     return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
 end
 
+function World:struct(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
+end
+
 function World:add(entity, first, second)
     clib.ecs_add_id(self, entity, aux.id(first, second))
 end

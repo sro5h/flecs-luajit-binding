@@ -208,6 +208,21 @@ typedef struct ecs_query_desc_t {
     ecs_entity_t entity;
 } ecs_query_desc_t;
 
+typedef struct ecs_member_t {
+    char const *name;
+    ecs_entity_t type;
+    int32_t count;
+    int32_t offset;
+    ecs_entity_t unit;
+    ecs_size_t size;
+    ecs_entity_t member;
+} ecs_member_t;
+
+typedef struct ecs_struct_desc_t {
+    ecs_entity_t entity;
+    ecs_member_t members[32]; // ECS_MEMBER_DESC_CACHE_SIZE
+} ecs_struct_desc_t;
+
 typedef struct ecs_stack_cursor_t {
     struct ecs_stack_page_t* cur;
     int16_t sp;
@@ -359,6 +374,7 @@ int ecs_fini(ecs_world_t*);
 ecs_entity_t ecs_entity_init(ecs_world_t*, ecs_entity_desc_t const*);
 ecs_entity_t ecs_component_init(ecs_world_t*, ecs_component_desc_t const*);
 ecs_query_t* ecs_query_init(ecs_world_t*, ecs_query_desc_t const*);
+ecs_entity_t ecs_struct_init(ecs_world_t*, ecs_struct_desc_t const*);
 void ecs_add_id(ecs_world_t*, ecs_entity_t, ecs_id_t);
 void ecs_remove_id(ecs_world_t*, ecs_entity_t, ecs_id_t);
 void ecs_enable_id(ecs_world_t*, ecs_entity_t, ecs_id_t, bool);
