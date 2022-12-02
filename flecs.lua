@@ -302,6 +302,32 @@ end
 
 -- }}}
 
+-- flecs.g {{{
+
+local function bind_g(flecs)
+    flecs.g = {
+        bool = clib.FLECS__Eecs_bool_t,
+        char = clib.FLECS__Eecs_char_t,
+        byte = clib.FLECS__Eecs_byte_t,
+        u8 = clib.FLECS__Eecs_u8_t,
+        u16 = clib.FLECS__Eecs_u16_t,
+        u32 = clib.FLECS__Eecs_u32_t,
+        u64 = clib.FLECS__Eecs_u64_t,
+        uptr = clib.FLECS__Eecs_uptr_t,
+        i8 = clib.FLECS__Eecs_i8_t,
+        i16 = clib.FLECS__Eecs_i16_t,
+        i32 = clib.FLECS__Eecs_i32_t,
+        i64 = clib.FLECS__Eecs_i64_t,
+        iptr = clib.FLECS__Eecs_iptr_t,
+        f32 = clib.FLECS__Eecs_f32_t,
+        f64 = clib.FLECS__Eecs_f64_t,
+        string = clib.FLECS__Eecs_string_t,
+        entity = clib.FLECS__Eecs_entity_t,
+    }
+end
+
+-- }}}
+
 -- flecs.init {{{
 
 local function bind(flecs, options)
@@ -335,6 +361,7 @@ local function init(flecs, optionsOrNil)
         end
 
         bind(flecs, options)
+        bind_g(flecs)
     end
 
     return flecs

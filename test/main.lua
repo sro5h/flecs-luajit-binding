@@ -6,6 +6,7 @@ ffi.cdef 'typedef struct Position { uint32_t x, y; } Position;'
 require 'test.world'
 require 'test.entity'
 require 'test.query'
+require 'test.g'
 
 print()
 

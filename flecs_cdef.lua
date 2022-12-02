@@ -23,6 +23,42 @@ typedef struct ecs_poly_t ecs_poly_t;
 typedef struct ecs_term_t ecs_term_t;
 typedef struct ecs_var_t ecs_var_t;
 typedef struct ecs_ref_t ecs_ref_t;
+// Meta typedefs
+typedef bool ecs_bool_t;
+typedef char ecs_char_t;
+typedef unsigned char ecs_byte_t;
+typedef uint8_t ecs_u8_t;
+typedef uint16_t ecs_u16_t;
+typedef uint32_t ecs_u32_t;
+typedef uint64_t ecs_u64_t;
+typedef uintptr_t ecs_uptr_t;
+typedef int8_t ecs_i8_t;
+typedef int16_t ecs_i16_t;
+typedef int32_t ecs_i32_t;
+typedef int64_t ecs_i64_t;
+typedef intptr_t ecs_iptr_t;
+typedef float ecs_f32_t;
+typedef double ecs_f64_t;
+typedef char* ecs_string_t;
+
+// Ids
+extern const ecs_entity_t FLECS__Eecs_bool_t;
+extern const ecs_entity_t FLECS__Eecs_char_t;
+extern const ecs_entity_t FLECS__Eecs_byte_t;
+extern const ecs_entity_t FLECS__Eecs_u8_t;
+extern const ecs_entity_t FLECS__Eecs_u16_t;
+extern const ecs_entity_t FLECS__Eecs_u32_t;
+extern const ecs_entity_t FLECS__Eecs_u64_t;
+extern const ecs_entity_t FLECS__Eecs_uptr_t;
+extern const ecs_entity_t FLECS__Eecs_i8_t;
+extern const ecs_entity_t FLECS__Eecs_i16_t;
+extern const ecs_entity_t FLECS__Eecs_i32_t;
+extern const ecs_entity_t FLECS__Eecs_i64_t;
+extern const ecs_entity_t FLECS__Eecs_iptr_t;
+extern const ecs_entity_t FLECS__Eecs_f32_t;
+extern const ecs_entity_t FLECS__Eecs_f64_t;
+extern const ecs_entity_t FLECS__Eecs_string_t;
+extern const ecs_entity_t FLECS__Eecs_entity_t;
 
 typedef void (*ecs_iter_action_t)(ecs_iter_t*);
 typedef void (*ecs_iter_init_action_t)(ecs_world_t const*, ecs_poly_t const*, ecs_iter_t*, ecs_term_t*);
