@@ -13,13 +13,13 @@ lust.describe('Struct', function()
 
     lust.it('Should create struct', function()
         local Position = world:struct({
-            name = 'Position',
+            entity = world:entity({ name = 'Position' }),
             members = {
                 { name = 'x', type = ecs.g.f32 },
                 { name = 'y', type = ecs.g.f32 },
             },
         })
 
-        lust.expect(Position).to.exist()
+        lust.expect(Position).to_not.be(0)
     end)
 end)

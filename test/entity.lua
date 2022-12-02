@@ -12,8 +12,8 @@ lust.describe('Entity', function()
     end)
 
     lust.it('Should create entities', function()
-        lust.expect(world:entity()).to.exist()
-        lust.expect(world:entity({ name = 'Bob' })).to.exist()
+        lust.expect(world:entity()).to_not.be(0)
+        lust.expect(world:entity({ name = 'Bob' })).to_not.be(0)
     end)
 
     lust.it('Should add entities', function()

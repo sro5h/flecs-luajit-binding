@@ -31,8 +31,8 @@ lust.describe('Query', function()
                 local position = iter:fields(i)]]
         while iter:next() do
             for e, position in iter:each() do
-                lust.expect(e).to.exist()
-                lust.expect(position).to.exist()
+                lust.expect(e).to_not.be(0)
+                lust.expect(position).to_not.be(0)
 
                 position.x = position.x + 1
             end
