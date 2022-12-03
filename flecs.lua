@@ -109,11 +109,11 @@ local function get(world, entity, symbol, first, second)
 end
 
 function World:get(entity, first, second)
-    return get(self, entity, self:symbol(first), first, second)
+    return get(self, entity, self:identifier(first), first, second)
 end
 
 function World:get_second(entity, first, second)
-    return get(self, entity, self:symbol(second), first, second)
+    return get(self, entity, self:identifier(second), first, second)
 end
 
 local function set(world, entity, symbol, first, secondOrValue, valueOrNil)
@@ -129,11 +129,11 @@ local function set(world, entity, symbol, first, secondOrValue, valueOrNil)
 end
 
 function World:set(entity, first, secondOrValue, valueOrNil)
-    set(self, entity, self:symbol(first), first, secondOrValue, valueOrNil)
+    set(self, entity, self:identifier(first), first, secondOrValue, valueOrNil)
 end
 
 function World:set_second(entity, first, secondOrValue, valueOrNil)
-    set(self, entity, self:symbol(second), first, secondOrValue, valueOrNil)
+    set(self, entity, self:identifier(second), first, secondOrValue, valueOrNil)
 end
 
 function World:modified(entity, first, second)
@@ -262,7 +262,7 @@ function Iter:field(j)
         return nil
     end
 
-    local ctype = ffi.typeof(self:world():symbol(self:field_id(j)))
+    local ctype = ffi.typeof(self:world():identifier(self:field_id(j)))
     local pointer = clib.ecs_field_w_size(self, ffi.sizeof(ctype), j)
 
     if self:is_readonly(j) then
