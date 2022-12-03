@@ -353,6 +353,8 @@ local function bind(flecs, options)
         flecs.Query = ffi.metatype('ecs_query_t', Query)
         flecs.Iter = ffi.metatype('ecs_iter_t', Iter)
     end
+
+    flecs.aux = aux
 end
 
 local function init(flecs, optionsOrNil)
