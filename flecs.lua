@@ -164,6 +164,10 @@ function World:symbol(entity)
     return aux.string(clib.ecs_get_symbol(self, entity))
 end
 
+function World:identifier(entity)
+    return self:symbol(entity) or self:name(entity)
+end
+
 function World:set_name(entity, value)
     clib.ecs_set_name(self, entity, value)
 end

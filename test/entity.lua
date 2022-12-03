@@ -48,6 +48,18 @@ lust.describe('Entity', function()
         lust.expect(p.y).to.be(2)
     end)
 
+    lust.it('Should return identifier', function()
+        local e1 = world:entity()
+        local e2 = world:entity({ name = 'Bob' })
+        local e3 = world:entity({ symbol = 'Alice' })
+        local e4 = world:entity({ name = 'Otto', symbol = 'Forster' })
+
+        lust.expect(world:identifier(e1)).to.be(nil)
+        lust.expect(world:identifier(e2)).to.be('Bob')
+        lust.expect(world:identifier(e3)).to.be('Alice')
+        lust.expect(world:identifier(e4)).to.be('Forster')
+    end)
+
     lust.it('Should lookup entities', function()
         local e = world:entity({ name = 'Velocity' })
 
