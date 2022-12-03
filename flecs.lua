@@ -20,6 +20,10 @@ function aux.string(string)
     return string ~= nil and ffi.string(string) or nil
 end
 
+function aux.free(pointer)
+    clib.ecs_os_api.free_(pointer)
+end
+
 -- }}}
 
 -- flecs.World {{{
