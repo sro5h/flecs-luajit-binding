@@ -1,3 +1,4 @@
+- Expose `aux` table and its functions as `flecs.aux`
 - Add `flecs.World:struct` function and ids of `ecs_{u,i}_{8,16,32,64}_t` types
   (and others) to `flecs.g` table.
 - Add subtable `g` to `flecs` to hold global variables (e.g. global ids or enum
