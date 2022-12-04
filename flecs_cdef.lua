@@ -13,11 +13,12 @@ typedef struct ecs_filter_t ecs_filter_t;
 typedef struct ecs_query_t ecs_query_t;
 typedef struct ecs_rule_t ecs_rule_t;
 typedef struct ecs_iter_t ecs_iter_t;
+typedef struct ecs_vector_t ecs_vector_t;
+typedef struct ecs_hashmap_t ecs_hashmap_t;
 typedef struct ecs_id_record_t ecs_id_record_t;
 typedef struct ecs_type_info_t ecs_type_info_t;
 typedef struct ecs_table_t ecs_table_t;
 typedef struct ecs_query_table_node_t ecs_query_table_node_t;
-typedef struct ecs_vector_t ecs_vector_t;
 typedef struct ecs_mixins_t ecs_mixins_t;
 typedef struct ecs_poly_t ecs_poly_t;
 typedef struct ecs_term_t ecs_term_t;
@@ -154,6 +155,51 @@ typedef struct ecs_os_api_t {
     ecs_flags32_t flags_;
 } ecs_os_api_t;
 extern ecs_os_api_t ecs_os_api;
+
+typedef enum ecs_meta_type_op_kind_t {
+    EcsOpArray,
+    EcsOpVector,
+    EcsOpPush,
+    EcsOpPop,
+    EcsOpScope,
+    EcsOpEnum,
+    EcsOpBitmask,
+    EcsOpPrimitive,
+    EcsOpBool,
+    EcsOpChar,
+    EcsOpByte,
+    EcsOpU8,
+    EcsOpU16,
+    EcsOpU32,
+    EcsOpU64,
+    EcsOpI8,
+    EcsOpI16,
+    EcsOpI32,
+    EcsOpI64,
+    EcsOpF32,
+    EcsOpF64,
+    EcsOpUPtr,
+    EcsOpIPtr,
+    EcsOpString,
+    EcsOpEntity,
+    EcsMetaTypeOpKindLast = EcsOpEntity
+} ecs_meta_type_op_kind_t;
+
+typedef struct ecs_meta_type_op_t {
+    ecs_meta_type_op_kind_t kind;
+    ecs_size_t offset;
+    int32_t count;
+    char const* name;
+    int32_t op_count;
+    ecs_size_t size;
+    ecs_entity_t type;
+    ecs_entity_t unit;
+    ecs_hashmap_t *members;
+} ecs_meta_type_op_t;
+
+typedef struct EcsMetaTypeSerialized {
+    ecs_vector_t* ops;
+} EcsMetaTypeSerialized;
 
 typedef struct ecs_entity_desc_t {
     int32_t _canary;
@@ -493,5 +539,8 @@ ecs_id_t ecs_field_id(ecs_iter_t const*, int32_t);
 size_t ecs_field_size(ecs_iter_t const*, int32_t);
 bool ecs_field_is_self(ecs_iter_t const*, int32_t);
 ecs_entity_t ecs_lookup(ecs_world_t const* world, char const* name);
+
+int32_t ecs_vector_count(ecs_vector_t const*);
+void* _ecs_vector_get(ecs_vector_t const*, ecs_size_t, int16_t, int32_t);
 
 ]]

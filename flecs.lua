@@ -209,6 +209,76 @@ function World:lookup(name)
     return clib.ecs_lookup(self, name)
 end
 
+function World:ctype(entity)
+    local identifier = self:identifier(entity)
+
+    if identifier == nil or pcall(ffi.typeof, identifier) then
+        return
+    end
+
+    local serialized = self:get(entity, flecs.g.MetaTypeSerialized)
+
+    if serialized == nil then
+        return
+    end
+
+    local cdef = 'typedef struct ' .. identifier
+
+    for i = 0, clib.ecs_vector_count(serialized.ops) do
+        local op = ffi.cast('ecs_meta_type_op_t', clib._ecs_vector_get(
+            serialized.ops,
+            ffi.sizeof('ecs_meta_type_op_t'),
+            -- Only as long as alignof is bigger than ECS_VECTOR_T_SIZE!
+            ecs.alignof('ecs_meta_type_op_t'),
+            i
+        ))
+
+        if op.kind == flecs.g.OpPush then
+            cdef = cdef .. '{'
+        else if op.kind == flecs.g.OpPop then
+            cdef = cdef .. '}'
+        else if op.kind == flecs.g.OpBool then
+            cdef = cdef .. 'ecs_bool_t ' .. op.name
+        else if op.kind == flecs.g.OpChar then
+            cdef = cdef .. 'ecs_char_t ' .. op.name
+        else if op.kind == flecs.g.OpByte then
+            cdef = cdef .. 'ecs_byte_t ' .. op.name
+        else if op.kind == flecs.g.OpU8 then
+            cdef = cdef .. 'ecs_u8_t ' .. op.name
+        else if op.kind == flecs.g.OpU16 then
+            cdef = cdef .. 'ecs_u16_t ' .. op.name
+        else if op.kind == flecs.g.OpU32 then
+            cdef = cdef .. 'ecs_u32_t ' .. op.name
+        else if op.kind == flecs.g.OpU64 then
+            cdef = cdef .. 'ecs_u64_t ' .. op.name
+        else if op.kind == flecs.g.OpI8 then
+            cdef = cdef .. 'ecs_i8_t ' .. op.name
+        else if op.kind == flecs.g.OpI16 then
+            cdef = cdef .. 'ecs_i16_t ' .. op.name
+        else if op.kind == flecs.g.OpI32 then
+            cdef = cdef .. 'ecs_i32_t ' .. op.name
+        else if op.kind == flecs.g.OpI64 then
+            cdef = cdef .. 'ecs_i64_t ' .. op.name
+        else if op.kind == flecs.g.OpF32 then
+            cdef = cdef .. 'ecs_f32_t ' .. op.name
+        else if op.kind == flecs.g.OpF64 then
+            cdef = cdef .. 'ecs_f64_t ' .. op.name
+        else if op.kind == flecs.g.OpUPtr then
+            cdef = cdef .. 'ecs_uptr_t ' .. op.name
+        else if op.kind == flecs.g.OpIPtr then
+            cdef = cdef .. 'ecs_iptr_t ' .. op.name
+        else if op.kind == flecs.g.OpString then
+            cdef = cdef .. 'ecs_string_t ' .. op.name
+        else if op.kind == flecs.g.OpEntity then
+            cdef = cdef .. 'ecs_entity_t ' .. op.name
+        end
+    end
+
+    cdef = cdef .. identifier .. ';'
+    print('cdef: ' .. cdef)
+    --ffi.cdef(cdef)
+end
+
 -- }}}
 
 -- flecs.Query {{{
