@@ -6,6 +6,8 @@ local clib
 
 -- aux {{{
 
+flecs.aux = aux
+
 function aux.class(tableOrNil)
     local table = tableOrNil or {}
     table.__index = table
@@ -29,6 +31,7 @@ end
 -- flecs.World {{{
 
 local World = aux.class()
+flecs.World = World
 
 function World.__new()
     return ffi.gc(clib.ecs_init(), clib.ecs_fini)
@@ -214,6 +217,7 @@ end
 -- flecs.Query {{{
 
 local Query = aux.class()
+flecs.Query = Query
 
 function Query:is_changed()
     return clib.ecs_query_changed(self, nil)
@@ -228,6 +232,7 @@ end
 -- flecs.Iter {{{
 
 local Iter = aux.class()
+flecs.Iter = Iter
 
 function Iter:world()
     return self._world
@@ -343,18 +348,10 @@ end
 
 -- flecs.init {{{
 
-local function bind(flecs, options)
-    if options.no_metatypes then
-        flecs.World = World
-        flecs.Query = Query
-        flecs.Iter = Iter
-    else
-        flecs.World = ffi.metatype('ecs_world_t', World)
-        flecs.Query = ffi.metatype('ecs_query_t', Query)
-        flecs.Iter = ffi.metatype('ecs_iter_t', Iter)
-    end
-
-    flecs.aux = aux
+local function bind(flecs)
+    flecs.World = ffi.metatype('ecs_world_t', World)
+    flecs.Query = ffi.metatype('ecs_query_t', Query)
+    flecs.Iter = ffi.metatype('ecs_iter_t', Iter)
 end
 
 local function init(flecs, optionsOrNil)
@@ -375,7 +372,10 @@ local function init(flecs, optionsOrNil)
             flecs.world = ffi.cast('ecs_world_t*', options.world)
         end
 
-        bind(flecs, options)
+        if not options.no_metatypes then
+            bind(flecs, options)
+        end
+
         bind_g(flecs)
     end
 
