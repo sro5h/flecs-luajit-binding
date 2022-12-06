@@ -239,7 +239,7 @@ function Iter:world()
 end
 
 function Iter:entity(index)
-    return self.entities[index]
+    return self._entities[index]
 end
 
 function Iter:count()
