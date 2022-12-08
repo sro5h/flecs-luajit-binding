@@ -1,5 +1,6 @@
 - Implement `ecs_luajit_struct_cdef` in Lua and add `flecs.World:ctype` to
   register a struct as a ctype
+- If any defines must be used, assert their value in `gen_cdef.py`
 - Use libclang to transform the flecs headers to strip unused declarations
 - Expose `aux` table and its functions as `flecs.aux`
 - Add `flecs.World:struct` function and ids of `ecs_{u,i}_{8,16,32,64}_t` types
