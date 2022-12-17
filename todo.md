@@ -1,3 +1,4 @@
+- Rename `flecs_cdef.lua` to `flecs.cdef.lua`
 - Implement `ecs_luajit_struct_cdef` in Lua and add `flecs.World:ctype` to
   register a struct as a ctype
 - If any defines must be used, assert their value in `gen_cdef.py`
