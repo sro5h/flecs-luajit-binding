@@ -348,13 +348,13 @@ end
 
 -- flecs.init {{{
 
-local function bind(flecs)
-    flecs.World = ffi.metatype('ecs_world_t', World)
-    flecs.Query = ffi.metatype('ecs_query_t', Query)
-    flecs.Iter = ffi.metatype('ecs_iter_t', Iter)
+function flecs:bind_metatypes()
+    self.World = ffi.metatype('ecs_world_t', World)
+    self.Query = ffi.metatype('ecs_query_t', Query)
+    self.Iter = ffi.metatype('ecs_iter_t', Iter)
 end
 
-local function init(flecs, optionsOrNil)
+function flecs:init(optionsOrNil)
     local options = optionsOrNil or {}
 
     if clib == nil then
@@ -369,19 +369,19 @@ local function init(flecs, optionsOrNil)
         end
 
         if options.world then
-            flecs.world = ffi.cast('ecs_world_t*', options.world)
+            self.world = ffi.cast('ecs_world_t*', options.world)
         end
 
-        if not options.no_metatypes then
-            bind(flecs, options)
+        if options.bind_metatypes then
+            self:bind_metatypes(options)
         end
 
-        bind_g(flecs)
+        bind_g(self)
     end
 
-    return flecs
+    return self
 end
 
 -- }}}
 
-return setmetatable(flecs, { __call = init })
+return setmetatable(flecs, { __call = flecs.init })

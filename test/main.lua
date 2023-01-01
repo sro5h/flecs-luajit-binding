@@ -2,6 +2,7 @@ package.path = package.path .. ';external/lust/?.lua'
 require 'flecs' {
     clib = 'external/flecs/build/libflecs.so',
     cdef = require 'flecs_cdef',
+    bind_metatypes = true,
 }
 
 lust = require 'lust'
