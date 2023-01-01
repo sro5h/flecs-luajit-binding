@@ -42,13 +42,14 @@ function World:entity(descOrNil)
     return clib.ecs_entity_init(self, ffi.new('ecs_entity_desc_t', desc))
 end
 
-function World:component(name, ctypeOrNil)
-    local ctype = ctypeOrNil or ffi.typeof(name)
-    local entity = self:entity({ name = name, symbol = name })
+function World:component(desc)
+    if type(desc.ctype) == 'string' then
+        desc.ctype = ffi.typeof(desc.ctype)
+    end
 
     return clib.ecs_component_init(self, ffi.new('ecs_component_desc_t', {
-        entity = entity,
-        type = { size = ffi.sizeof(ctype), alignment = ffi.alignof(ctype) },
+        entity = desc.entity,
+        type = { size = ffi.sizeof(desc.ctype), alignment = ffi.alignof(desc.ctype) },
     }))
 end
 
