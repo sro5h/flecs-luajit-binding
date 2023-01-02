@@ -15,7 +15,10 @@ lust.describe('Query', function()
         local e1 = world:entity()
         local e2 = world:entity()
         local t = world:entity()
-        local Position = world:component('Position')
+        local Position = world:component({
+            entity = world:entity({ name = 'Position', symbol = 'Position' }),
+            ctype = 'Position',
+        })
 
         world:set(e1, Position, { x = 1, y = 2 })
         world:set(e2, Position, { x = 11, y = 42 })

@@ -36,7 +36,10 @@ lust.describe('Entity', function()
 
     lust.it('Should set and get components', function()
         local e = world:entity()
-        local Position = world:component('Position')
+        local Position = world:component({
+            entity = world:entity({ name = 'Position', symbol = 'Position' }),
+            ctype = 'Position',
+        })
 
         world:set(e, Position, { x = 1, y = 2 })
 
