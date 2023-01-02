@@ -177,6 +177,7 @@ pick("t", "ecs_poly_t")
 pick("t", "ecs_world_t")
 pick("t", "ecs_iter_t")
 pick("t", "ecs_query_t")
+pick("t", "ecs_vector_t")
 
 # }}}
 
@@ -240,6 +241,22 @@ pick("o", "ecs_iter_t", True)
 
 # }}}
 
+# Meta structs {{{
+
+pick("o", "ecs_meta_type_op_kind_t")
+pick("t", "ecs_meta_type_op_t")
+pick("o", "ecs_meta_type_op_t")
+pick("t", "EcsMetaTypeSerialized")
+pick("o", "EcsMetaTypeSerialized")
+
+# }}}
+
+# Meta struct ids{{{
+
+pick("o", ecs_id("EcsMetaTypeSerialized"))
+
+# }}}
+
 # API functions {{{
 
 pick("o", "ecs_make_pair")
@@ -286,6 +303,8 @@ pick("o", "ecs_field_id")
 pick("o", "ecs_field_size")
 pick("o", "ecs_field_is_self")
 pick("o", "ecs_lookup")
+pick("o", "ecs_vector_count")
+pick("o", "_ecs_vector_get")
 
 # }}}
 

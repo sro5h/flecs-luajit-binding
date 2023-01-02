@@ -44,6 +44,7 @@ typedef void ecs_poly_t;
 typedef struct ecs_world_t ecs_world_t;
 typedef struct ecs_iter_t ecs_iter_t;
 typedef struct ecs_query_t ecs_query_t;
+typedef struct ecs_vector_t ecs_vector_t;
 typedef uintptr_t ecs_os_thread_t;
 typedef uintptr_t ecs_os_mutex_t;
 typedef uintptr_t ecs_os_cond_t;
@@ -364,6 +365,51 @@ struct ecs_iter_t {
     void (* _fini)(struct ecs_iter_t *);
     struct ecs_iter_t * _chain_it;
 };
+enum ecs_meta_type_op_kind_t {
+    EcsOpArray,
+    EcsOpVector,
+    EcsOpPush,
+    EcsOpPop,
+    EcsOpScope,
+    EcsOpEnum,
+    EcsOpBitmask,
+    EcsOpPrimitive,
+    EcsOpBool,
+    EcsOpChar,
+    EcsOpByte,
+    EcsOpU8,
+    EcsOpU16,
+    EcsOpU32,
+    EcsOpU64,
+    EcsOpI8,
+    EcsOpI16,
+    EcsOpI32,
+    EcsOpI64,
+    EcsOpF32,
+    EcsOpF64,
+    EcsOpUPtr,
+    EcsOpIPtr,
+    EcsOpString,
+    EcsOpEntity,
+    EcsMetaTypeOpKindLast,
+};
+typedef struct ecs_meta_type_op_t ecs_meta_type_op_t;
+struct ecs_meta_type_op_t {
+    enum ecs_meta_type_op_kind_t kind;
+    ecs_size_t offset;
+    int32_t count;
+    const char * name;
+    int32_t op_count;
+    ecs_size_t size;
+    ecs_entity_t type;
+    ecs_entity_t unit;
+    struct ecs_hashmap_t * members;
+};
+typedef struct EcsMetaTypeSerialized EcsMetaTypeSerialized;
+struct EcsMetaTypeSerialized {
+    struct ecs_vector_t * ops;
+};
+extern const ecs_entity_t FLECS__EEcsMetaTypeSerialized;
 ecs_id_t ecs_make_pair(ecs_entity_t, ecs_entity_t);
 struct ecs_world_t * ecs_init(void);
 int ecs_fini(struct ecs_world_t *);
@@ -408,4 +454,6 @@ ecs_id_t ecs_field_id(struct ecs_iter_t const *, int32_t);
 int ecs_field_size(struct ecs_iter_t const *, int32_t);
 bool ecs_field_is_self(struct ecs_iter_t const *, int32_t);
 ecs_entity_t ecs_lookup(struct ecs_world_t const *, const char *);
+int32_t ecs_vector_count(struct ecs_vector_t const *);
+void * _ecs_vector_get(struct ecs_vector_t const *, ecs_size_t, int16_t, int32_t);
 ]]

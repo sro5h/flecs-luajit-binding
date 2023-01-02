@@ -325,6 +325,7 @@ end
 
 local function bind_g(flecs)
     flecs.g = {
+        MetaTypeSerialized = clib.FLECS__EEcsMetaTypeSerialized,
         bool = clib.FLECS__Eecs_bool_t,
         char = clib.FLECS__Eecs_char_t,
         byte = clib.FLECS__Eecs_byte_t,
@@ -342,6 +343,31 @@ local function bind_g(flecs)
         f64 = clib.FLECS__Eecs_f64_t,
         string = clib.FLECS__Eecs_string_t,
         entity = clib.FLECS__Eecs_entity_t,
+        OpArray = clib.EcsOpArray,
+        OpVector = clib.EcsOpVector,
+        OpPush = clib.EcsOpPush,
+        OpPop = clib.EcsOpPop,
+        OpScope = clib.EcsOpScope,
+        OpEnum = clib.EcsOpEnum,
+        OpBitmask = clib.EcsOpBitmask,
+        OpPrimitive = clib.EcsOpPrimitive,
+        OpBool = clib.EcsOpBool,
+        OpChar = clib.EcsOpChar,
+        OpByte = clib.EcsOpByte,
+        OpU8 = clib.EcsOpU8,
+        OpU16 = clib.EcsOpU16,
+        OpU32 = clib.EcsOpU32,
+        OpU64 = clib.EcsOpU64,
+        OpI8 = clib.EcsOpI8,
+        OpI16 = clib.EcsOpI16,
+        OpI32 = clib.EcsOpI32,
+        OpI64 = clib.EcsOpI64,
+        OpF32 = clib.EcsOpF32,
+        OpF64 = clib.EcsOpF64,
+        OpUPtr = clib.EcsOpUPtr,
+        OpIPtr = clib.EcsOpIPtr,
+        OpString = clib.EcsOpString,
+        OpEntity = clib.EcsOpEntity,
     }
 end
 
