@@ -124,7 +124,6 @@ if __name__ == '__main__':
 
     for i in args.i:
         i_path = Path(i)
-        c_path = os.path.commonpath([ o_path, i_path ])
 
         with i_path.open() as i_file:
             i_json = json.load(i_file)
@@ -133,7 +132,9 @@ if __name__ == '__main__':
                 c_args = [ '-I' + (i_path.parent / d).as_posix() for d in f.get('include_dirs', []) ]
                 f_path = i_path.parent / f['path']
                 unit = Index.create().parse(f_path, c_args)
-                result += dump_unit(unit, f['symbols'], f_path.relative_to(c_path)) + "\n"
+
+                c_path = os.path.commonpath([ o_path.resolve(), f_path.resolve() ])
+                result += dump_unit(unit, f['symbols'], f_path.resolve().relative_to(c_path)) + "\n"
 
     result += ']]\n'
 
