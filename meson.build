@@ -20,7 +20,7 @@ custom_target(
   command: [
     generate_cdef,
     '-i', '@INPUT@',
-    '-o', '@OUTPUT@',
+    '-o', '@SOURCE_ROOT@/@OUTPUT@',
   ],
   build_by_default: true,
 )
