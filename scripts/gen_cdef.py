@@ -92,7 +92,8 @@ def dump(cursor, privatize):
 
 def dump_unit(unit, symbols):
     symbols_dict = { 'Typedef': {}, 'Default': {} }
-    result = f'/* Symbols from {unit.spelling} {{{{{{ */\n'
+    path = pathlib.Path(unit.spelling).resolve().relative_to(pathlib.Path('.').resolve())
+    result = f'/* Symbols from {path} {{{{{{ */\n'
 
     for c in unit.cursor.get_children():
         if c.kind == CursorKind.TYPEDEF_DECL:
