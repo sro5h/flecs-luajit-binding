@@ -4,8 +4,8 @@ project(
   license: 'mit',
 )
 
-srcs_lua = files('flecs.lua', 'flecs_cdef.lua')
-srcs = [ srcs_lua, files('flecs_cdef.json') ]
+srcs_flecs_lua = files('flecs.lua')
+srcs = [ srcs_flecs_lua, files('flecs_cdef.lua', 'flecs_cdef.json') ]
 
 generate_cdef = find_program('scripts/generate_cdef.py')
 
