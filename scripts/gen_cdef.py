@@ -113,7 +113,7 @@ def dump_unit(unit, symbols):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description = 'Generate cdef lua files')
     parser.add_argument('-i', type = str, nargs = '+', required = True, help = 'Input files')
-    parser.add_argument('-o', type = str, required = True, help = 'Output file')
+    parser.add_argument('-o', type = str, help = 'Output file')
     args = parser.parse_args()
     assert(args)
 
@@ -133,8 +133,9 @@ if __name__ == '__main__':
 
     result += ']]\n'
 
-    print(result)
-
-    o_path = pathlib.Path(args.o)
-    o_path.parent.mkdir(parents = True, exist_ok = True)
-    o_path.write_text(result)
+    if args.o is None:
+        print(result)
+    else:
+        o_path = pathlib.Path(args.o)
+        o_path.parent.mkdir(parents = True, exist_ok = True)
+        o_path.write_text(result)
