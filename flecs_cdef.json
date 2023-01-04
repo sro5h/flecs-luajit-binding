@@ -186,7 +186,18 @@
               { "name": "ecs_count_id", "kind": "Default" },
 
               { "comment": "Group lookup" },
-              { "name": "ecs_lookup", "kind": "Default" },
+              { "name": "ecs_lookup_child", "kind": "Default" },
+              { "name": "ecs_lookup_path_w_sep", "kind": "Default" },
+              { "name": "ecs_lookup_symbol", "kind": "Default" },
+
+              { "comment": "Group paths" },
+              { "name": "ecs_get_path_w_sep", "kind": "Default" },
+
+              { "comment": "Group scopes" },
+              { "name": "ecs_set_scope", "kind": "Default" },
+              { "name": "ecs_get_scope", "kind": "Default" },
+              { "name": "ecs_set_with", "kind": "Default" },
+              { "name": "ecs_get_with", "kind": "Default" },
 
               { "comment": "Group queries" },
               { "name": "ecs_query_init", "kind": "Default" },

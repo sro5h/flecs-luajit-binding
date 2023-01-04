@@ -215,8 +215,48 @@ function World:iter(query)
     return clib.ecs_query_iter(self, query)
 end
 
-function World:lookup(name)
-    return clib.ecs_lookup(self, name)
+function World:lookup(parentOrNil, name)
+    local parent = name and parentOrNil or 0
+    name = name or parentOrNil
+
+    return clib.ecs_lookup_child(self, parent, name)
+end
+
+function World:lookup_path(parentOrNil, path)
+    local parent = path and parentOrNil or 0
+    path = path or parentOrNil
+
+    return clib.ecs_lookup_path_w_sep(self, parent, path, '.', nil, true)
+end
+
+function World:lookup_symbol(symbol, lookup_as_path)
+    return clib.ecs_lookup_symbol(self, symbol, lookup_as_path)
+end
+
+function World:get_path(parentOrNil, child)
+    local parent = child and parentOrNil or 0
+    child = child or parentOrNil
+
+    return aux.string(ffi.gc(
+        clib.ecs_get_path_w_sep(self, parent, child, '.', nil),
+        aux.free
+    ))
+end
+
+function World:set_scope(entity)
+    return clib.ecs_set_scope(self, entity)
+end
+
+function World:scope()
+    return clib.ecs_get_scope(self)
+end
+
+function World:set_with(entity)
+    return clib.ecs_set_with(self, entity)
+end
+
+function World:with()
+    return clib.ecs_get_with(self)
 end
 
 -- }}}

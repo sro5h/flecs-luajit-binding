@@ -415,7 +415,14 @@ ecs_entity_t ecs_get_target(struct ecs_world_t const *, ecs_entity_t, ecs_entity
 ecs_entity_t ecs_get_target_for_id(struct ecs_world_t const *, ecs_entity_t, ecs_entity_t, ecs_id_t);
 void ecs_enable(struct ecs_world_t *, ecs_entity_t, bool);
 int32_t ecs_count_id(struct ecs_world_t const *, ecs_id_t);
-ecs_entity_t ecs_lookup(struct ecs_world_t const *, const char *);
+ecs_entity_t ecs_lookup_child(struct ecs_world_t const *, ecs_entity_t, const char *);
+ecs_entity_t ecs_lookup_path_w_sep(struct ecs_world_t const *, ecs_entity_t, const char *, const char *, const char *, bool);
+ecs_entity_t ecs_lookup_symbol(struct ecs_world_t const *, const char *, bool);
+char * ecs_get_path_w_sep(struct ecs_world_t const *, ecs_entity_t, ecs_entity_t, const char *, const char *);
+ecs_entity_t ecs_set_scope(struct ecs_world_t *, ecs_entity_t);
+ecs_entity_t ecs_get_scope(struct ecs_world_t const *);
+ecs_entity_t ecs_set_with(struct ecs_world_t *, ecs_id_t);
+ecs_id_t ecs_get_with(struct ecs_world_t const *);
 struct ecs_query_t * ecs_query_init(struct ecs_world_t *, struct ecs_query_desc_t const *);
 struct ecs_iter_t ecs_query_iter(struct ecs_world_t const *, struct ecs_query_t *);
 bool ecs_query_changed(struct ecs_query_t *, struct ecs_iter_t const *);
