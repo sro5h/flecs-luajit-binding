@@ -51,13 +51,11 @@ function World:entity(descOrNil)
 end
 
 function World:component(desc)
-    if type(desc.ctype) == 'string' then
-        desc.ctype = ffi.typeof(desc.ctype)
-    end
+    local ctype = desc.ctype or ffi.typeof(world:identifier(desc.entity))
 
     return clib.ecs_component_init(self, ffi.new('ecs_component_desc_t', {
         entity = desc.entity,
-        type = { size = ffi.sizeof(desc.ctype), alignment = ffi.alignof(desc.ctype) },
+        type = { size = ffi.sizeof(ctype), alignment = ffi.alignof(ctype) },
     }))
 end
 
