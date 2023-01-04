@@ -28,6 +28,14 @@ end
 
 -- }}}
 
+-- flecs {{{
+
+function flecs.pair(first, second)
+    return aux.id(first, second)
+end
+
+-- }}}
+
 -- flecs.World {{{
 
 local World = aux.class()
