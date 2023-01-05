@@ -237,6 +237,15 @@
               { "name": "ecs_field_size", "kind": "Default" },
               { "name": "ecs_field_is_self", "kind": "Default" },
 
+              { "comment": "Group staging" },
+              { "name": "ecs_defer_begin", "kind": "Default" },
+              { "name": "ecs_is_deferred", "kind": "Default" },
+              { "name": "ecs_defer_end", "kind": "Default" },
+              { "name": "ecs_defer_suspend", "kind": "Default" },
+              { "name": "ecs_defer_resume", "kind": "Default" },
+              { "name": "ecs_stage_is_readonly", "kind": "Default" },
+              { "name": "ecs_stage_is_async", "kind": "Default" },
+
               { "comment": "File flecs/private/addons.h" },
 
                 { "comment": "File flecs/addons/meta.h" },

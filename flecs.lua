@@ -358,6 +358,36 @@ function World:query(descOrNil)
     return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
 end
 
+-- Group staging
+
+function World:defer_begin()
+    return clib.ecs_defer_begin(self)
+end
+
+function World:is_deferred()
+    return clib.ecs_is_deferred(self)
+end
+
+function World:defer_end()
+    return clib.ecs_defer_end(self)
+end
+
+function World:defer_suspend()
+    return clib.ecs_defer_suspend(self)
+end
+
+function World:defer_resume()
+    return clib.ecs_defer_resume(self)
+end
+
+function World:is_readonly()
+    return clib.ecs_stage_is_readonly(self)
+end
+
+function World:is_async()
+    return clib.ecs_stage_is_async(self)
+end
+
 function World:struct(descOrNil)
     local desc = descOrNil or {}
     return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
