@@ -146,6 +146,7 @@
               { "comment": "Group creating_entities" },
               { "name": "ecs_entity_init", "kind": "Default" },
               { "name": "ecs_component_init", "kind": "Default" },
+              { "name": "ecs_clone", "kind": "Default" },
 
               { "comment": "Group adding_removing" },
               { "name": "ecs_add_id", "kind": "Default" },

@@ -59,6 +59,8 @@ function World:set_target_fps(value)
     clib.ecs_set_target_fps(value)
 end
 
+-- Group creating_entities
+
 function World:entity(descOrNil)
     local desc = descOrNil or {}
     return clib.ecs_entity_init(self, ffi.new('ecs_entity_desc_t', desc))
@@ -71,6 +73,18 @@ function World:component(desc)
         entity = desc.entity,
         type = { size = ffi.sizeof(ctype), alignment = ffi.alignof(ctype) },
     }))
+end
+
+function World:clone(dstOrNil, src, copy)
+    local dst = dstOrNil
+
+    if copy == nil then
+        dst = nil
+        src = dstOrNil
+        copy = src
+    end
+
+    return clib.ecs_clone(self, dst, src, copy)
 end
 
 function World:query(descOrNil)

@@ -391,6 +391,7 @@ bool ecs_should_quit(struct ecs_world_t const *);
 void ecs_set_target_fps(struct ecs_world_t *, float);
 ecs_entity_t ecs_entity_init(struct ecs_world_t *, struct ecs_entity_desc_t const *);
 ecs_entity_t ecs_component_init(struct ecs_world_t *, struct ecs_component_desc_t const *);
+ecs_entity_t ecs_clone(struct ecs_world_t *, ecs_entity_t, ecs_entity_t, bool);
 void ecs_add_id(struct ecs_world_t *, ecs_entity_t, ecs_id_t);
 void ecs_remove_id(struct ecs_world_t *, ecs_entity_t, ecs_id_t);
 void ecs_enable_id(struct ecs_world_t *, ecs_entity_t, ecs_id_t, bool);
