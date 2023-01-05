@@ -101,15 +101,7 @@ function World:override(entity, first, second)
     clib.ecs_override_id(self, entity, aux.id(first, second))
 end
 
-function World:query(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
-end
-
-function World:struct(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
-end
+-- Group enabling_disabling
 
 local function enable(world, entity, first, second, value)
     if first then
@@ -129,6 +121,16 @@ end
 
 function World:is_enabled(entity, first, second)
     return clib.ecs_is_enabled_id(self, entity, aux.id(first, second))
+end
+
+function World:query(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
+end
+
+function World:struct(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
 end
 
 function World:clear(entity)
