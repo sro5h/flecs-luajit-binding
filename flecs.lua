@@ -287,19 +287,7 @@ function World:count(entity)
     return clib.ecs_count_id(self, entity)
 end
 
-function World:query(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
-end
-
-function World:struct(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
-end
-
-function World:iter(query)
-    return clib.ecs_query_iter(self, query)
-end
+-- Group lookup
 
 function World:lookup(parentOrNil, name)
     local parent = name and parentOrNil or 0
@@ -317,6 +305,20 @@ end
 
 function World:lookup_symbol(symbol, lookup_as_path)
     return clib.ecs_lookup_symbol(self, symbol, lookup_as_path)
+end
+
+function World:query(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
+end
+
+function World:struct(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
+end
+
+function World:iter(query)
+    return clib.ecs_query_iter(self, query)
 end
 
 function World:get_path(parentOrNil, child)
