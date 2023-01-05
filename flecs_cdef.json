@@ -219,6 +219,7 @@
 
               { "comment": "Group queries" },
               { "name": "ecs_query_init", "kind": "Default" },
+              { "name": "ecs_query_get_filter", "kind": "Default" },
               { "name": "ecs_query_iter", "kind": "Default" },
               { "name": "ecs_query_changed", "kind": "Default" },
               { "name": "ecs_query_orphaned", "kind": "Default" },

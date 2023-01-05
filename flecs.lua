@@ -351,6 +351,8 @@ function World:filter(descOrNil)
     )
 end
 
+-- Group queries
+
 function World:query(descOrNil)
     local desc = descOrNil or {}
     return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
@@ -411,12 +413,24 @@ end
 local Query = aux.class()
 flecs.Query = Query
 
+function Query:filter()
+    return clib.ecs_query_get_filter(self)
+end
+
 function Query:is_changed()
     return clib.ecs_query_changed(self, nil)
 end
 
 function Query:is_orphaned()
     return clib.ecs_query_orphaned(self)
+end
+
+function Query:count()
+    return clib.ecs_query_entity_count(self)
+end
+
+function Query:entity()
+    return clib.ecs_query_entity(self)
 end
 
 -- }}}

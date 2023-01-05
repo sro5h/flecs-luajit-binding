@@ -440,6 +440,7 @@ void ecs_filter_fini(struct ecs_filter_t *);
 int32_t ecs_filter_find_this_var(struct ecs_filter_t const *);
 struct ecs_iter_t ecs_filter_iter(struct ecs_world_t const *, struct ecs_filter_t const *);
 struct ecs_query_t * ecs_query_init(struct ecs_world_t *, struct ecs_query_desc_t const *);
+struct ecs_filter_t const * ecs_query_get_filter(struct ecs_query_t *);
 struct ecs_iter_t ecs_query_iter(struct ecs_world_t const *, struct ecs_query_t *);
 bool ecs_query_changed(struct ecs_query_t *, struct ecs_iter_t const *);
 bool ecs_query_orphaned(struct ecs_query_t *);
