@@ -434,6 +434,7 @@ ecs_entity_t ecs_set_scope(struct ecs_world_t *, ecs_entity_t);
 ecs_entity_t ecs_get_scope(struct ecs_world_t const *);
 ecs_entity_t ecs_set_with(struct ecs_world_t *, ecs_id_t);
 ecs_id_t ecs_get_with(struct ecs_world_t const *);
+const char * ecs_set_name_prefix(struct ecs_world_t *, const char *);
 struct ecs_query_t * ecs_query_init(struct ecs_world_t *, struct ecs_query_desc_t const *);
 struct ecs_iter_t ecs_query_iter(struct ecs_world_t const *, struct ecs_query_t *);
 bool ecs_query_changed(struct ecs_query_t *, struct ecs_iter_t const *);

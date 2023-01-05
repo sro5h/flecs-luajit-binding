@@ -319,19 +319,7 @@ function World:get_path(parentOrNil, child)
     ))
 end
 
-function World:query(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
-end
-
-function World:struct(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
-end
-
-function World:iter(query)
-    return clib.ecs_query_iter(self, query)
-end
+-- Group scopes
 
 function World:set_scope(entity)
     return clib.ecs_set_scope(self, entity)
@@ -347,6 +335,24 @@ end
 
 function World:with()
     return clib.ecs_get_with(self)
+end
+
+function World:set_name_prefix(value)
+    return aux.string(clib.ecs_set_name_prefix(self, value))
+end
+
+function World:query(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
+end
+
+function World:struct(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
+end
+
+function World:iter(query)
+    return clib.ecs_query_iter(self, query)
 end
 
 -- }}}
