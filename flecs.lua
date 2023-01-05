@@ -341,6 +341,16 @@ function World:set_name_prefix(value)
     return aux.string(clib.ecs_set_name_prefix(self, value))
 end
 
+-- Group filters
+
+function World:filter(descOrNil)
+    local desc = descOrNil or {}
+    return ffi.gc(
+        clib.ecs_filter_init(self, ffi.new('ecs_filter_desc_t', desc)),
+        clib.ecs_filter_fini
+    )
+end
+
 function World:query(descOrNil)
     local desc = descOrNil or {}
     return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
@@ -351,8 +361,47 @@ function World:struct(descOrNil)
     return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
 end
 
-function World:iter(query)
-    return clib.ecs_query_iter(self, query)
+function World:iter(iterable)
+    if ffi.istype('ecs_filter_t', iterable) then
+        return clib.ecs_filter_iter(self, iterable)
+    elseif ffi.istype('ecs_query_t', iterable) then
+        return clib.ecs_query_iter(self, iterable)
+    end
+end
+
+-- }}}
+
+-- flecs.Filter {{{
+
+local Filter = aux.class()
+flecs.Filter = Filter
+
+function Filter:find_this_var()
+    return clib.ecs_filter_find_this_var(self)
+end
+
+function Filter:term_count()
+    return self._term_count
+end
+
+function Filter:field_count()
+    return self._field_count
+end
+
+function Filter:is_owned()
+    return self._owned
+end
+
+function Filter:is_terms_owned()
+    return self._terms_owned
+end
+
+function Filter:flags()
+    return self._flags
+end
+
+function Filter:name()
+    return aux.string(self._name)
 end
 
 -- }}}

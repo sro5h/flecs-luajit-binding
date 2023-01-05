@@ -69,16 +69,16 @@ struct ecs_iterable_t {
     void (* init)(struct ecs_world_t const *, const ecs_poly_t *, struct ecs_iter_t *, struct ecs_term_t *);
 };
 struct ecs_filter_t {
-    struct ecs_header_t hdr;
-    struct ecs_term_t * terms;
-    int32_t term_count;
-    int32_t field_count;
-    bool owned;
-    bool terms_owned;
-    ecs_flags32_t flags;
-    char * name;
-    char * variable_names [1];
-    struct ecs_iterable_t iterable;
+    struct ecs_header_t _hdr;
+    struct ecs_term_t * _terms;
+    int32_t _term_count;
+    int32_t _field_count;
+    bool _owned;
+    bool _terms_owned;
+    ecs_flags32_t _flags;
+    char * _name;
+    char * _variable_names [1];
+    struct ecs_iterable_t _iterable;
 };
 struct ecs_table_cache_iter_t {
     struct ecs_table_cache_hdr_t * cur;
@@ -435,6 +435,10 @@ ecs_entity_t ecs_get_scope(struct ecs_world_t const *);
 ecs_entity_t ecs_set_with(struct ecs_world_t *, ecs_id_t);
 ecs_id_t ecs_get_with(struct ecs_world_t const *);
 const char * ecs_set_name_prefix(struct ecs_world_t *, const char *);
+struct ecs_filter_t * ecs_filter_init(struct ecs_world_t const *, struct ecs_filter_desc_t const *);
+void ecs_filter_fini(struct ecs_filter_t *);
+int32_t ecs_filter_find_this_var(struct ecs_filter_t const *);
+struct ecs_iter_t ecs_filter_iter(struct ecs_world_t const *, struct ecs_filter_t const *);
 struct ecs_query_t * ecs_query_init(struct ecs_world_t *, struct ecs_query_desc_t const *);
 struct ecs_iter_t ecs_query_iter(struct ecs_world_t const *, struct ecs_query_t *);
 bool ecs_query_changed(struct ecs_query_t *, struct ecs_iter_t const *);

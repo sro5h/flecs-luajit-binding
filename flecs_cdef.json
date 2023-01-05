@@ -36,7 +36,7 @@
                 { "name": "ecs_header_t", "kind": "Default" },
                 { "name": "ecs_poly_t", "kind": "Typedef" },
                 { "name": "ecs_iterable_t", "kind": "Default" },
-              { "name": "ecs_filter_t", "kind": "Default" },
+              { "name": "ecs_filter_t", "kind": "Default", "privatize": true },
 
               { "comment": "File flecs/private/api_types.h" },
                 { "name": "ecs_table_cache_iter_t", "kind": "Default" },
@@ -210,6 +210,12 @@
               { "name": "ecs_set_with", "kind": "Default" },
               { "name": "ecs_get_with", "kind": "Default" },
               { "name": "ecs_set_name_prefix", "kind": "Default" },
+
+              { "comment": "Group filters" },
+              { "name": "ecs_filter_init", "kind": "Default" },
+              { "name": "ecs_filter_fini", "kind": "Default" },
+              { "name": "ecs_filter_find_this_var", "kind": "Default" },
+              { "name": "ecs_filter_iter", "kind": "Default" },
 
               { "comment": "Group queries" },
               { "name": "ecs_query_init", "kind": "Default" },
