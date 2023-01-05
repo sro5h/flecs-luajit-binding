@@ -87,6 +87,20 @@ function World:clone(dstOrNil, src, copy)
     return clib.ecs_clone(self, dst, src, copy)
 end
 
+-- Group adding_removing
+
+function World:add(entity, first, second)
+    clib.ecs_add_id(self, entity, aux.id(first, second))
+end
+
+function World:remove(entity, first, second)
+    clib.ecs_remove_id(self, entity, aux.id(first, second))
+end
+
+function World:override(entity, first, second)
+    clib.ecs_override_id(self, entity, aux.id(first, second))
+end
+
 function World:query(descOrNil)
     local desc = descOrNil or {}
     return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
@@ -95,14 +109,6 @@ end
 function World:struct(descOrNil)
     local desc = descOrNil or {}
     return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
-end
-
-function World:add(entity, first, second)
-    clib.ecs_add_id(self, entity, aux.id(first, second))
-end
-
-function World:remove(entity, first, second)
-    clib.ecs_remove_id(self, entity, aux.id(first, second))
 end
 
 local function enable(world, entity, first, second, value)
@@ -127,10 +133,6 @@ end
 
 function World:clear(entity)
     clib.ecs_clear(self, entity)
-end
-
-function World:delete(entity)
-    clib.ecs_delete(self, entity)
 end
 
 function World:delete_with(first, second)

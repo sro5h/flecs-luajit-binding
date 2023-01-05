@@ -394,6 +394,7 @@ ecs_entity_t ecs_component_init(struct ecs_world_t *, struct ecs_component_desc_
 ecs_entity_t ecs_clone(struct ecs_world_t *, ecs_entity_t, ecs_entity_t, bool);
 void ecs_add_id(struct ecs_world_t *, ecs_entity_t, ecs_id_t);
 void ecs_remove_id(struct ecs_world_t *, ecs_entity_t, ecs_id_t);
+void ecs_override_id(struct ecs_world_t *, ecs_entity_t, ecs_id_t);
 void ecs_enable_id(struct ecs_world_t *, ecs_entity_t, ecs_id_t, bool);
 bool ecs_is_enabled_id(struct ecs_world_t const *, ecs_entity_t, ecs_id_t);
 ecs_id_t ecs_make_pair(ecs_entity_t, ecs_entity_t);

@@ -151,6 +151,7 @@
               { "comment": "Group adding_removing" },
               { "name": "ecs_add_id", "kind": "Default" },
               { "name": "ecs_remove_id", "kind": "Default" },
+              { "name": "ecs_override_id", "kind": "Default" },
 
               { "comment": "Group enabling_disabling" },
               { "name": "ecs_enable_id", "kind": "Default" },
