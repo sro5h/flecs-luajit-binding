@@ -139,6 +139,9 @@
               { "comment": "Group world_api" },
               { "name": "ecs_init", "kind": "Default" },
               { "name": "ecs_fini", "kind": "Default" },
+              { "name": "ecs_quit", "kind": "Default" },
+              { "name": "ecs_should_quit", "kind": "Default" },
+              { "name": "ecs_set_target_fps", "kind": "Default" },
 
               { "comment": "Group creating_entities" },
               { "name": "ecs_entity_init", "kind": "Default" },

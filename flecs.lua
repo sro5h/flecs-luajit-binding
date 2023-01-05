@@ -45,6 +45,20 @@ function World.__new()
     return ffi.gc(clib.ecs_init(), clib.ecs_fini)
 end
 
+-- Group world_frame
+
+function World:quit()
+    clib.ecs_quit(self)
+end
+
+function World:should_quit()
+    return clib.ecs_should_quit(self)
+end
+
+function World:set_target_fps(value)
+    clib.ecs_set_target_fps(value)
+end
+
 function World:entity(descOrNil)
     local desc = descOrNil or {}
     return clib.ecs_entity_init(self, ffi.new('ecs_entity_desc_t', desc))
