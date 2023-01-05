@@ -307,6 +307,18 @@ function World:lookup_symbol(symbol, lookup_as_path)
     return clib.ecs_lookup_symbol(self, symbol, lookup_as_path)
 end
 
+-- Group paths
+
+function World:get_path(parentOrNil, child)
+    local parent = child and parentOrNil or 0
+    child = child or parentOrNil
+
+    return aux.string(ffi.gc(
+        clib.ecs_get_path_w_sep(self, parent, child, '.', nil),
+        aux.free
+    ))
+end
+
 function World:query(descOrNil)
     local desc = descOrNil or {}
     return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
@@ -319,16 +331,6 @@ end
 
 function World:iter(query)
     return clib.ecs_query_iter(self, query)
-end
-
-function World:get_path(parentOrNil, child)
-    local parent = child and parentOrNil or 0
-    child = child or parentOrNil
-
-    return aux.string(ffi.gc(
-        clib.ecs_get_path_w_sep(self, parent, child, '.', nil),
-        aux.free
-    ))
 end
 
 function World:set_scope(entity)
