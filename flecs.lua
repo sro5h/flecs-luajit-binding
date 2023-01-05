@@ -358,6 +358,16 @@ function World:query(descOrNil)
     return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
 end
 
+-- Group iterators
+
+function World:iter(iterable)
+    if ffi.istype('ecs_filter_t', iterable) then
+        return clib.ecs_filter_iter(self, iterable)
+    elseif ffi.istype('ecs_query_t', iterable) then
+        return clib.ecs_query_iter(self, iterable)
+    end
+end
+
 -- Group staging
 
 function World:defer_begin()
@@ -391,14 +401,6 @@ end
 function World:struct(descOrNil)
     local desc = descOrNil or {}
     return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
-end
-
-function World:iter(iterable)
-    if ffi.istype('ecs_filter_t', iterable) then
-        return clib.ecs_filter_iter(self, iterable)
-    elseif ffi.istype('ecs_query_t', iterable) then
-        return clib.ecs_query_iter(self, iterable)
-    end
 end
 
 -- }}}
