@@ -208,15 +208,7 @@ function World:set_second(entity, first, secondOrValue, valueOrNil)
     set(self, entity, self:identifier(second), first, secondOrValue, valueOrNil)
 end
 
-function World:query(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
-end
-
-function World:struct(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
-end
+-- Group metadata
 
 function World:is_valid(entity)
     return clib.ecs_is_valid(self, entity)
@@ -224,6 +216,10 @@ end
 
 function World:is_alive(entity)
     return clib.ecs_is_alive(self, entity)
+end
+
+function World:alive(entity)
+    return clib.ecs_get_alive(self, entity)
 end
 
 function World:ensure(entity)
@@ -236,6 +232,18 @@ end
 
 function World:exists(entity)
     return clib.ecs_exists(self, entity)
+end
+
+function World:typeid(entity)
+    return clib.ecs_get_typeid(self, entity)
+end
+
+function World:is_tag(entity)
+    return clib.ecs_id_is_tag(self, entity)
+end
+
+function World:is_in_use(entity)
+    return clib.ecs_id_in_use(self, entity)
 end
 
 function World:name(entity)
@@ -277,6 +285,16 @@ end
 
 function World:count(entity)
     return clib.ecs_count_id(self, entity)
+end
+
+function World:query(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
+end
+
+function World:struct(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
 end
 
 function World:iter(query)
