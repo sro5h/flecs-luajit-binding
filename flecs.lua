@@ -141,15 +141,7 @@ function World:remove_all(first, second)
     clib.ecs_remove_all(self, aux.id(first, second))
 end
 
-function World:query(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
-end
-
-function World:struct(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
-end
+-- Group getting
 
 local function get(world, entity, symbol, first, second)
     local ctype = ffi.typeof('$ const*', ffi.typeof(symbol))
@@ -162,6 +154,16 @@ end
 
 function World:get_second(entity, first, second)
     return get(self, entity, self:identifier(second), first, second)
+end
+
+function World:query(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
+end
+
+function World:struct(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
 end
 
 local function set(world, entity, symbol, first, secondOrValue, valueOrNil)
