@@ -403,6 +403,8 @@ void ecs_delete(struct ecs_world_t *, ecs_entity_t);
 void ecs_delete_with(struct ecs_world_t *, ecs_id_t);
 void ecs_remove_all(struct ecs_world_t *, ecs_id_t);
 const void * ecs_get_id(struct ecs_world_t const *, ecs_entity_t, ecs_id_t);
+void * ecs_get_mut_id(struct ecs_world_t *, ecs_entity_t, ecs_id_t);
+void * ecs_emplace_id(struct ecs_world_t *, ecs_entity_t, ecs_id_t);
 void ecs_modified_id(struct ecs_world_t *, ecs_entity_t, ecs_id_t);
 ecs_entity_t ecs_set_id(struct ecs_world_t *, ecs_entity_t, ecs_id_t, int, const void *);
 bool ecs_is_valid(struct ecs_world_t const *, ecs_entity_t);

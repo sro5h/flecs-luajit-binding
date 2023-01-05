@@ -156,14 +156,36 @@ function World:get_second(entity, first, second)
     return get(self, entity, self:identifier(second), first, second)
 end
 
-function World:query(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
+-- Group setting
+
+local function get_mut(world, entity, symbol, first, second)
+    local ctype = ffi.typeof('$*', ffi.typeof(symbol))
+    return ffi.cast(ctype, clib.ecs_get_mut_id(world, entity, aux.id(first, second)))
 end
 
-function World:struct(descOrNil)
-    local desc = descOrNil or {}
-    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
+function World:get_mut(entity, first, second)
+    return get_mut(self, entity, self:identifier(first), first, second)
+end
+
+function World:get_mut_second(entity, first, second)
+    return get_mut(self, entity, self:identifier(second), first, second)
+end
+
+local function emplace(world, entity, symbol, first, second)
+    local ctype = ffi.typeof('$*', ffi.typeof(symbol))
+    return ffi.cast(ctype, clib.ecs_emplace_id(world, entity, aux.id(first, second)))
+end
+
+function World:emplace(entity, first, second)
+    return emplace(self, entity, self:identifier(first), first, second)
+end
+
+function World:emplace_second(entity, first, second)
+    return emplace(self, entity, self:identifier(second), first, second)
+end
+
+function World:modified(entity, first, second)
+    clib.ecs_modified_id(self, entity, aux.id(first, second))
 end
 
 local function set(world, entity, symbol, first, secondOrValue, valueOrNil)
@@ -186,8 +208,14 @@ function World:set_second(entity, first, secondOrValue, valueOrNil)
     set(self, entity, self:identifier(second), first, secondOrValue, valueOrNil)
 end
 
-function World:modified(entity, first, second)
-    clib.ecs_modified_id(self, entity, aux.id(first, second))
+function World:query(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
+end
+
+function World:struct(descOrNil)
+    local desc = descOrNil or {}
+    return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
 end
 
 function World:is_valid(entity)

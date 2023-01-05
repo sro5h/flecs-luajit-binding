@@ -170,6 +170,8 @@
               { "name": "ecs_get_id", "kind": "Default" },
 
               { "comment": "Group setting" },
+              { "name": "ecs_get_mut_id", "kind": "Default" },
+              { "name": "ecs_emplace_id", "kind": "Default" },
               { "name": "ecs_modified_id", "kind": "Default" },
               { "name": "ecs_set_id", "kind": "Default" },
 
