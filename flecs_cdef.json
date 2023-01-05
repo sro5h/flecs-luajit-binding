@@ -225,11 +225,15 @@
               { "name": "ecs_query_orphaned", "kind": "Default" },
 
               { "comment": "Group iterators" },
+              { "name": "ecs_iter_is_true", "kind": "Default" },
+              { "name": "ecs_iter_first", "kind": "Default" },
               { "name": "ecs_iter_next", "kind": "Default" },
               { "name": "ecs_field_w_size", "kind": "Default" },
               { "name": "ecs_field_is_readonly", "kind": "Default" },
               { "name": "ecs_field_is_writeonly", "kind": "Default" },
+              { "name": "ecs_field_is_set", "kind": "Default" },
               { "name": "ecs_field_id", "kind": "Default" },
+              { "name": "ecs_field_src", "kind": "Default" },
               { "name": "ecs_field_size", "kind": "Default" },
               { "name": "ecs_field_is_self", "kind": "Default" },
 

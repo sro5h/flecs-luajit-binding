@@ -440,6 +440,14 @@ end
 local Iter = aux.class()
 flecs.Iter = Iter
 
+function Iter:is_true()
+    return clib.ecs_iter_is_true(self)
+end
+
+function Iter:first()
+    return clib.ecs_iter_first(self)
+end
+
 function Iter:world()
     return self._world
 end
@@ -452,20 +460,32 @@ function Iter:count()
     return self._count
 end
 
+function Iter:field_is_readonly(j)
+    return clib.ecs_field_is_readonly(self, j)
+end
+
+function Iter:field_is_writeonly(j)
+    return clib.ecs_field_is_writeonly(self, j)
+end
+
+function Iter:field_is_set(j)
+    return clib.ecs_field_is_set(self, j)
+end
+
 function Iter:field_id(j)
     return clib.ecs_field_id(self, j)
 end
 
-function Iter:is_self(j)
+function Iter:field_src(j)
+    return clib.ecs_field_src(self, j)
+end
+
+function Iter:field_size(j)
+    return clib.ecs_field_size(self, j)
+end
+
+function Iter:field_is_self(j)
     return clib.ecs_field_is_self(self, j)
-end
-
-function Iter:is_readonly(j)
-    return clib.ecs_field_is_readonly(self, j)
-end
-
-function Iter:is_writeonly(j)
-    return clib.ecs_field_is_writeonly(self, j)
 end
 
 function Iter:field(j)
@@ -476,7 +496,7 @@ function Iter:field(j)
     local ctype = ffi.typeof(self:world():identifier(self:field_id(j)))
     local pointer = clib.ecs_field_w_size(self, ffi.sizeof(ctype), j)
 
-    if self:is_readonly(j) then
+    if self:field_is_readonly(j) then
         return ffi.cast(ffi.typeof('$ const*', ctype), pointer)
     else
         return ffi.cast(ffi.typeof('$*', ctype), pointer)
@@ -494,7 +514,7 @@ function Iter:fields(index)
     for j = 1, self:field_count() do
         local field = self:field(j)
 
-        if self:is_self(j) and field ~= nil then
+        if self:field_is_self(j) and field ~= nil then
             table.insert(fields, field + index)
         else
             table.insert(fields, field)
