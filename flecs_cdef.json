@@ -20,11 +20,12 @@
                 { "name": "ecs_os_cond_t", "kind": "Typedef" },
                 { "name": "ecs_os_mutex_t", "kind": "Typedef" },
                 { "name": "ecs_os_dl_t", "kind": "Typedef" },
+                { "name": "ecs_os_thread_id_t", "kind": "Typedef" },
               { "name": "ecs_os_api_t", "kind": "Default" },
               { "name": "ecs_os_api_t", "kind": "Typedef" },
               { "name": "ecs_os_api", "kind": "Default" },
 
-              { "comment": "Group api_types" },
+              { "comment": "Group api_types > core_types" },
               { "name": "ecs_id_t", "kind": "Typedef" },
               { "name": "ecs_entity_t", "kind": "Typedef" },
               { "name": "ecs_world_t", "kind": "Typedef" },
