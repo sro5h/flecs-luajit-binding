@@ -26,6 +26,23 @@ function aux.free(pointer)
     clib.ecs_os_api.free_(pointer)
 end
 
+function aux.len(array)
+    local result = 1
+    while array[result] ~= nil do
+        result = result + 1
+    end
+
+    return array[0] == nil and result - 1 or result
+end
+
+-- Used to fix arrays that are passed to `ffi.new` as initialisers as LuaJIT
+-- repeats single elements
+function aux.fix_array(array, init)
+    if array ~= nil and aux.len(array) == 1 then
+        table.insert(array, init)
+    end
+end
+
 -- }}}
 
 -- flecs {{{
@@ -63,6 +80,8 @@ end
 
 function World:entity(descOrNil)
     local desc = descOrNil or {}
+    aux.fix_array(desc.add, 0)
+
     return clib.ecs_entity_init(self, ffi.new('ecs_entity_desc_t', desc))
 end
 
@@ -345,6 +364,8 @@ end
 
 function World:filter(descOrNil)
     local desc = descOrNil or {}
+    aux.fix_array(desc.terms, {})
+
     return ffi.gc(
         clib.ecs_filter_init(self, ffi.new('ecs_filter_desc_t', desc)),
         clib.ecs_filter_fini
@@ -355,6 +376,8 @@ end
 
 function World:query(descOrNil)
     local desc = descOrNil or {}
+    aux.fix_array(desc.filter.terms, {})
+
     return clib.ecs_query_init(self, ffi.new('ecs_query_desc_t', desc))
 end
 
@@ -400,6 +423,8 @@ end
 
 function World:struct(descOrNil)
     local desc = descOrNil or {}
+    aux.fix_array(desc.members, {})
+
     return clib.ecs_struct_init(self, ffi.new('ecs_struct_desc_t', desc))
 end
 

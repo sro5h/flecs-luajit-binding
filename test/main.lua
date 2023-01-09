@@ -10,6 +10,7 @@ lust = require 'lust'
 local ffi = require 'ffi'
 ffi.cdef 'typedef struct Position { uint32_t x, y; } Position;'
 
+require 'test.aux'
 require 'test.world'
 require 'test.entity'
 require 'test.query'
