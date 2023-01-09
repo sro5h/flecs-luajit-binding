@@ -572,6 +572,10 @@ function Iter:next()
     return clib.ecs_iter_next(self)
 end
 
+function Iter:fini()
+    return clib.ecs_iter_fini(self)
+end
+
 function Iter:delta_time()
     return self._delta_time
 end

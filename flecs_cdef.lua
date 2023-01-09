@@ -451,6 +451,7 @@ bool ecs_query_orphaned(struct ecs_query_t *);
 bool ecs_iter_is_true(struct ecs_iter_t *);
 ecs_entity_t ecs_iter_first(struct ecs_iter_t *);
 bool ecs_iter_next(struct ecs_iter_t *);
+void ecs_iter_fini(struct ecs_iter_t *);
 void * ecs_field_w_size(struct ecs_iter_t const *, int, int32_t);
 bool ecs_field_is_readonly(struct ecs_iter_t const *, int32_t);
 bool ecs_field_is_writeonly(struct ecs_iter_t const *, int32_t);
