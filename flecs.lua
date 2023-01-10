@@ -513,6 +513,10 @@ function Iter:entity(index)
     return self._entities[index]
 end
 
+function Iter:system()
+    return self._system
+end
+
 function Iter:count()
     return self._count
 end
