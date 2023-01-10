@@ -734,6 +734,7 @@ end
 function flecs:bind_metatypes()
     self.World = ffi.metatype('ecs_world_t', World)
     self.Query = ffi.metatype('ecs_query_t', Query)
+    self.Filter = ffi.metatype('ecs_filter_t', Filter)
     self.Iter = ffi.metatype('ecs_iter_t', Iter)
 end
 
